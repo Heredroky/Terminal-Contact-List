@@ -30,6 +30,15 @@ class Agenda:
 		else:
 			print '{} was not found'.format(name)
 
+	def update_contact(self, name, n_name, n_phone, n_email):
+		self._contact_to_modify = ''
+		for contact in self._contacts:
+			if name == contact.name:
+				contact.name = n_name
+				contact.phone = n_phone
+				contact.email = n_email
+				break
+
 	def list(self):
 		for contact in self._contacts:
 			self._print_contact(contact)
@@ -61,14 +70,18 @@ def run():
 			agenda.add(name, phone, email)
 
 		elif cmd == 'u':
-			print ''
+			name = str(raw_input('Contact\'s name: '))
+			agenda.search_contact(name)
+			n_name = str(raw_input('New name: '))
+			n_phone = str(raw_input('New phone: '))
+			n_email = str(raw_input('New email: '))
+			agenda.update_contact(name, n_name, n_phone, n_email)
 		elif cmd == 's':
 			name = str(raw_input('Contact\'s name: '))
 			agenda.search_contact(name)
 		elif cmd == 'r':
 			name = str(raw_input('Contact\'s name: '))
 			agenda.remove_contact(name)
-			print ''
 		elif cmd == 'l':
 			agenda.list()
 		elif cmd == 'e':
