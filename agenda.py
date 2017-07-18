@@ -1,4 +1,5 @@
 from contact import Contact
+import csv
 
 class Agenda:
 	def __init__(self):
@@ -7,11 +8,13 @@ class Agenda:
 	def add(self, name, phone, email):
 		contact = Contact(name, phone, email)
 		self._contacts.append(contact)
+		self._save()
 
 	def remove_contact(self, name):
 		for contact in self._contacts:
 			if name == contact.name:
 				self._contacts.remove(contact)
+				self._save()
 				break
 		else:
 			print '{} was not found'.format(name)
@@ -33,11 +36,19 @@ class Agenda:
 				contact.name = n_name
 				contact.phone = n_phone
 				contact.email = n_email
+				self._save()
 				break
 
 	def list(self):
 		for contact in self._contacts:
 			self._print_contact(contact)
+
+	def _save(self):
+		with open('contacts.csv', 'w') as f:
+			writer = csv.writer(f)
+			writer.writerow(('name', 'phone', 'email'))
+			for contact in self._contacts:
+				writer.writerow((contact.name, contact.phone, contact.email))
 
 	def _print_contact(self, contact):
 		print '*--*--*--*--*--*--*--*--*--*--*--*'

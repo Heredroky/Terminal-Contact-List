@@ -1,8 +1,17 @@
 from agenda import Agenda
+import csv
 
 def run():
 
 	agenda = Agenda()
+
+	with open('contacts.csv', 'r') as f:
+		reader = csv.reader(f)
+		for idx, row in enumerate(reader):
+			if idx == 0:
+				continue
+			agenda.add(row[0], row[1], row[2])
+
 	while True:
 		print '''What do you wanna do?
 	[a]Add Contact
@@ -40,4 +49,7 @@ def run():
 			print 'Choose a valid action.'
 
 if __name__ == '__main__':
+	print '*'*44
+	print '|**********WELCOME TO YOUR AGENDA**********|'
+	print '*'*44
 	run()
